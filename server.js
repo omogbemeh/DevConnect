@@ -4,13 +4,15 @@ const app = express();
 
 app.get( '/' , (req, res) => res.send('API Running'));
 
+connectDB(); //Connect the database
+
+app.use(express.json( { extended : false}));
+
 //Define Routes
 app.use('/api/users', require('./routes/api/users')); //User Route
 app.use('/api/posts', require('./routes/api/posts')); //Post Route
-app.use('/api/profiles', require('./routes/api/profiles')); //Profiles Route
+app.use('/api/profile', require('./routes/api/profiles')); //Profiles Route
 app.use('/api/auth', require('./routes/api/auth')); //Use Route
-
-connectDB(); //Connect the database
 
 const PORT = process.env.PORT || 5000;
 
