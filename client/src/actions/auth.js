@@ -1,4 +1,4 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT} from './constants'
+import { REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, CLEAR_PROFILE} from './constants'
 import { setAlert } from './alert'
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
@@ -82,4 +82,7 @@ export const logout = () => dispatch => {
     dispatch({
         type: LOGOUT,
     })
-}
+    dispatch({
+        type: CLEAR_PROFILE
+    });
+};
