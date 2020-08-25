@@ -83,31 +83,19 @@ router.post('/', [ auth, [
         if (linkedin) profileFields.social.youtube = linkedin
           
         try {
-            let profile = await Profile.findOne({ user: req.user.id})
-
-            if (profile) {
-                //Update
-                profile = await Profile.findByIdAndUpdate({ user: req.user.id },
-                                                          { $set: profileFields },
-                                                          { new: true }
-                    );
-
-                    return res.json(profile);
-
-            }
-
-            profile = new Profile(profileFields);
-
-            await profile.save();
+            // Using upsert option (creates new doc if no match is found):
+            let profile = await Profile.findOneAndUpdate(
+              { user: req.user.id },
+              { $set: profileFields },
+              { new: true, upsert: true }
+            );
             res.json(profile);
-
-        } catch (err) {
+          } catch (err) {
             console.error(err.message);
-            res.status(500).send('Server Error')
+            res.status(500).send('Server Error');
+          }
         }
-    }           
-
-);
+      );
 
 // GET api/profile
 // description: Get all profiles

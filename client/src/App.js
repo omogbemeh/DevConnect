@@ -4,7 +4,8 @@ import Navbar from './componenets/layout/Navbar';
 import Landing from './componenets/layout/Landing';
 import Register from './componenets/auth/Register';
 import Login from './componenets/auth/Login';
-import Alert from './componenets/auth/Alert'
+import Alert from './componenets/auth/Alert';
+import CreateProfile from './componenets/profile-forms/CreateProfile';
 import './App.css';
 // Redux
 import { Provider } from 'react-redux';
@@ -36,7 +37,8 @@ const App = () => {
           <Switch>
               <Route exact path='/register' component={ Register } />
               <Route exact path='/login' component={ Login } />
-              <PrivateRoute component={ Dashboard } />
+              <PrivateRoute exact path='/dashboard' component={ Dashboard } />
+              <PrivateRoute exact path='/create-profile' component={ CreateProfile } />
           </Switch>
         </section>
       </Fragment>
