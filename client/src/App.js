@@ -7,6 +7,9 @@ import Login from './componenets/auth/Login';
 import Alert from './componenets/auth/Alert';
 import CreateProfile from './componenets/profile-forms/CreateProfile';
 import EditProfile from './componenets/profile-forms/EditProfile';
+import AddExpereince from './componenets/profile-forms/AddExperience';
+import AddEducation from './componenets/profile-forms/AddEducation';
+
 
 import './App.css';
 // Redux
@@ -42,6 +45,8 @@ const App = () => {
               <PrivateRoute exact path='/dashboard' component={ Dashboard } />
               <PrivateRoute exact path='/create-profile' component={ CreateProfile } />
               <PrivateRoute exact path='/edit-profile' component={ EditProfile } />
+              <PrivateRoute exact path='/add-experience' component={ AddExpereince } />
+              <PrivateRoute exact path='/add-education' component={ AddEducation } />
           </Switch>
         </section>
       </Fragment>
