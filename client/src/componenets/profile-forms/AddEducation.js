@@ -1,7 +1,42 @@
-import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
+import React, { Fragment, useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addEducation } from '../../actions/profile';
 
-const AddEducation = props => {
+const AddEducation = ({ addEducation, history }) => {
+
+    const [formData, setFormData] = useState({
+        school: '',
+        degree: '',
+        fieldofstudy: '',
+        from: '',
+        current: false,
+        to: '',
+        descriptiion: '',
+    })
+
+    const [toDate, toggleToDate] = useState(false)
+
+    const {
+        school,
+        degree,
+        fieldofstudy,
+        from,
+        current,
+        to,
+        descriptiion
+            } = formData
+
+    const onChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value})
+    }
+
+    const onSubmit = e => {
+        e.preventDefault()
+        addEducation(formData, history)
+    }
+
     return (
         <Fragment>
                 <h1 class="large text-primary">Add Your Education</h1>
@@ -9,12 +44,14 @@ const AddEducation = props => {
                     <i class="fas fa-graduation-cap"></i> Add any school, bootcamp, etc that you have attended
                 </p>
                 <small>* = required field</small>
-                <form class="form">
+                <form class="form" onSubmit={e => onSubmit(e)}>
                     <div class="form-group">
                         <input
                             type="text"
                             placeholder="* School or Bootcamp"
                             name="school"
+                            value={school}
+                            onChange={e => onChange(e)}
                             required
                         />
                     </div>
@@ -23,24 +60,30 @@ const AddEducation = props => {
                             type="text"
                             placeholder="* Degree or Certificate"
                             name="degree"
+                            value={degree}
+                            onChange={e => onChange(e)}
                             required
                         />
                     </div>
                     <div class="form-group">
-                        <input type="text" placeholder="Field Of Study" name="fieldofstudy" />
+                        <input type="text" placeholder="Field Of Study" name="fieldofstudy" value={fieldofstudy} onChange={e => onChange(e)}
+                        />
                     </div>
                     <div class="form-group">
                         <h4>From Date</h4>
-                        <input type="date" name="from" />
+                        <input type="date" name="from"  value={from} onChange={e => onChange(e)}/>
                     </div>
                     <div class="form-group">
                         <p>
-                            <input type="checkbox" name="current" value="" /> Current School or Bootcamp
+                            <input type="checkbox" name="current" value={current} onChange={e => {
+                                setFormData({ ...formData, current: !current});
+                                toggleToDate(!toDate)
+                            }} /> Current School or Bootcamp
                         </p>
                     </div>
                     <div class="form-group">
                         <h4>To Date</h4>
-                        <input type="date" name="to" />
+                        <input type="date" name="to" value={to} onChange={e => onchange(e)} disabled={ toDate ? 'disabled' : ''} />
                     </div>
                     <div class="form-group">
                         <textarea
@@ -48,6 +91,8 @@ const AddEducation = props => {
                             cols="30"
                             rows="5"
                             placeholder="Program Description"
+                            value={descriptiion} 
+                            onChange={e => onChange(e)}
                         ></textarea>
                     </div>
                     <input type="submit" class="btn btn-primary my-1" />
@@ -58,7 +103,7 @@ const AddEducation = props => {
 }
 
 AddEducation.propTypes = {
-
+    addEducation: PropTypes.func.isRequired,
 }
 
-export default AddEducation
+export default connect(null, { addEducation })(withRouter(AddEducation));

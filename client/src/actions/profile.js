@@ -92,7 +92,11 @@ export const addEducation = (formData, history) => async dispatch => {
         dispatch({
             type: GET_PROFILE,
             payload: res.data
-        })
+        });
+
+        dispatch(setAlert('Education Added', 'success'));
+
+        history.push('/dashboard')
     
     } catch (err) {
         const errors = err.response.data.errors;
