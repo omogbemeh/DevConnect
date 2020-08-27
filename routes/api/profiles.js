@@ -227,18 +227,19 @@ router.put('/education', [ auth,
     check('school', 'School is required').not().isEmpty(),
     check('degree', 'Degree is required').not().isEmpty(),
     check('fieldofstudy', 'Field of study is required').not().isEmpty(),
-    check('from', 'From Date is required').not().isEmpty(),
-    check('to', 'To Date is required').not().isEmpty()
+    check('from', 'From Date is required').not().isEmpty(), 
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array()})
 
-    const {
+    const { 
         school,
         degree,
         fieldofstudy,
         from,
-        to
+        to,
+        description,
+        current
     } = req.body
 
     const newEd = {
@@ -246,7 +247,9 @@ router.put('/education', [ auth,
         degree,
         fieldofstudy,
         from,
-        to
+        to,
+        description,
+        current
     }
 
     try {

@@ -5,9 +5,12 @@ import PropTypes from 'prop-types';
 import { getProfile } from '../../actions/profile';
 import Spinner from '../layout/Spinner'
 import DashboardActions from './DashboardActions'
+import DashboardExperience from './DashboardExperience'
+import DashboardEducation from './DashboardEducation'
+
 
 const Dashboard = ({ getProfile, auth: { user }, profile: { profile, loading } }) => {
-    useEffect(() => {
+     useEffect(() => {
         getProfile()
     }, [])
 
@@ -18,6 +21,8 @@ const Dashboard = ({ getProfile, auth: { user }, profile: { profile, loading } }
             <i className='fas fa-user'></i> Welcome { user && user.name }</p>
             { profile ? <Fragment>
                     <DashboardActions />
+                    <DashboardExperience experiences={profile.experience}/>
+                    <DashboardEducation educations={profile.education}/>
                 </Fragment> : <Fragment>
                 <p>You currently do not have a profile, Please tell us more about you</p>
                 <Link to='/create-profile' className='btn btn-primary my-1'>Create Profile</Link>
