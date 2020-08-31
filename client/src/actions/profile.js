@@ -1,4 +1,4 @@
-import { GET_PROFILE, PROFILE_ERROR } from './constants';
+import { GET_PROFILE, GET_PROFILES, PROFILE_ERROR, CLEAR_PROFILE, GET_REPOS } from './constants';
 import axios from 'axios';
 import { setAlert } from './alert';
 
@@ -14,6 +14,65 @@ export const getProfile = () => async dispatch  => {
         dispatch({
             type: PROFILE_ERROR,
         })
+    }
+}
+
+// Get all profiles
+export const getProfiles = () => async dispatch => {
+    try {
+        const res = await axios.get('/api/profile')
+    dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+    })
+    } catch (err) {
+        const errors = err.response.data.errors;
+        if(errors) {
+            errors.map(error => dispatch(setAlert(error.msg, 'danger')))
+        }
+
+        dispatch({
+            type: PROFILE_ERROR,
+        })
+    }   
+}
+
+//Get profile by userId
+export const getProfileById = userId => async dispatch => {
+    try {
+        const res = await axios.get(`/api/profile/user/${userId}`)
+        dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+        });
+    } catch (err) {
+        const errors = err.response.data.errors;
+        if(errors) {
+            errors.map(error => dispatch(setAlert(error.msg, 'danger')))
+        }
+        dispatch({
+            type: PROFILE_ERROR,
+        })
+    }
+}
+
+//Get Github repo for a user
+export const getGithubRepo = username => async dispatch => {
+    try {
+        const res = await axios.get(`/api/profile/github/${username}`)
+        dispatch({
+            type: GET_REPOS,
+            dispatch: res.data
+        })
+    } catch (err) {
+        const errors = err.response.data.errors
+        if (errors) {
+            errors.map(error => dispatch(setAlert(error.msg, 'danger')))
+        }
+        dispatch({
+            type: PROFILE_ERROR
+        })
+
     }
 }
 
