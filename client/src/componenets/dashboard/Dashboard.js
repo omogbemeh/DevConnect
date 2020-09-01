@@ -12,7 +12,7 @@ import DashboardEducation from './DashboardEducation'
 const Dashboard = ({ getProfile, auth: { user }, profile: { profile, loading } }) => {
      useEffect(() => {
         getProfile()
-    }, [])
+    }, [getProfile])
 
     return loading && profile === null ? <Spinner /> : 
         <Fragment>  

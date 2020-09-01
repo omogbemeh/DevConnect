@@ -80,10 +80,8 @@ router.delete('/:id', auth, async (req, res) => {
 
         if (post.user.toString() !== req.user.id) res.status(401).json({ msg: 'user not authorised'});
         await post.remove();
-
-        res.send('Post removed')
        
-        
+        res.json({ msg: 'Post Removed' })
     } catch (err) {
         console.error(err.message);
         if (err.kind === 'ObjectId') res.status(404).json({ msg: 'Post not found' })
@@ -106,11 +104,8 @@ router.put('/like/:id', auth, async (req, res) => {
         }
 
         post.likes.unshift({ user: req.user.id });
-
-        res.send('Post has been liked');
-
         await post.save()
-        
+        res.json(post.likes);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error')

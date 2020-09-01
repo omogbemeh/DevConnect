@@ -13,3 +13,10 @@ export const GET_REPOS = 'GET_REPOS';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const CREATE_PROFILE = 'CREATE_PROFILE';
+export const GET_POSTS = 'GET_POSTS';
+export const POST_ERROR = 'POST_ERROR';
+export const MAKE_POST = 'MAKE_POST';
+export const UPDATE_LIKES = 'UPDATE_LIKES';
+export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+

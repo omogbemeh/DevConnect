@@ -8,7 +8,7 @@ import Spinner from '../../componenets/layout/Spinner'
 const AddProfiles = ({ getProfiles, profile: { profiles, loading } }) => {
   useEffect(() => {
     getProfiles()
-  }, [])
+  }, [getProfiles])
 
   const profile = profiles.map( prof => (
     <Fragment key={prof._id}>
