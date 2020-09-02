@@ -19,4 +19,6 @@ export const MAKE_POST = 'MAKE_POST';
 export const UPDATE_LIKES = 'UPDATE_LIKES';
 export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const DELETE_POST = 'DELETE_POST';
+
 
