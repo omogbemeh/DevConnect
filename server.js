@@ -3,8 +3,6 @@ const connectDB = require('./config/db') //import the database connection
 const app = express();
 const path = require('path');
 
-app.get( '/' , (req, res) => res.send('API Running'));
-
 connectDB(); //Connect the database
 
 app.use(express.json( { extended : false}));
@@ -25,3 +23,4 @@ if(process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server Started on port ${PORT}`));
+
