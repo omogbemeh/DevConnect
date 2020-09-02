@@ -4,7 +4,8 @@ import { REGISTER_SUCCESS,
          AUTH_ERROR, 
          LOGIN_SUCCESS, 
          LOGIN_FAIL,
-         LOGOUT
+         LOGOUT,
+         DELETE_ACCOUNT
     } from '../actions/constants'
 
 const initialState = {
@@ -38,6 +39,7 @@ export const register = (state = initialState, action) => {
         case LOGIN_FAIL:
         case REGISTER_FAIL:
         case AUTH_ERROR:
+        case DELETE_ACCOUNT:
             localStorage.removeItem('token');
             return {
                 ...state,

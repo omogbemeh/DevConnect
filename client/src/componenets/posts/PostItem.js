@@ -1,24 +1,24 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
-import { likePost } from '../../actions/post';
-import { unlikePost } from '../../actions/post';
+import { likePost, unlikePost, deletePost } from '../../actions/post';
 
-const PostItem = ({ post, auth, likePost, unlikePost }) => {
+const PostItem = ({ post, auth, likePost, unlikePost, deletePost }) => {
     return (
         <Fragment>
                 <div className="posts">
                     <div className="post bg-white p-1 my-1">
                         <div>
-                            <a href="profile.html">
+                            <Link to={`/profile/${post.user}`}>
                             <img
                                 className="round-img"
                                 src={ post.avatar }
                                 alt=""
                             />
                             <h4>{ post.user.name }</h4>
-                            </a>
+                            </Link>
                         </div>
                         <div>
                             <p className="my-1">
@@ -34,14 +34,15 @@ const PostItem = ({ post, auth, likePost, unlikePost }) => {
                             <button onClick={() => unlikePost(post._id)} type="button" className="btn btn-light">
                             <i className="fas fa-thumbs-down"></i>
                             </button>
-                            <a href="post.html" className="btn btn-primary">
+                            <Link to={`/posts/${post._id}`} className="btn btn-primary">
                             Discussion{' '}
                             { post.comments.length > 0 && (<span className='comment-count'>{ post.comments.length }</span>)}
-                            </a>
-                            { post.loading === false && post.user === auth.user.id && 
+                            </Link>
+                            { !auth.loading && post.user === auth.user._id && 
                                 <button      
                                 type="button"
                                 className="btn btn-danger"
+                                onClick ={e => {deletePost(post._id)}}
                             >
                                 <i className="fas fa-times"></i>
                             </button>
@@ -59,10 +60,11 @@ PostItem.propTypes = {
     auth: PropTypes.object.isRequired,
     likePost: PropTypes.func.isRequired,
     unlikePost: PropTypes.func.isRequired,
+    deletePost: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, { likePost, unlikePost })(PostItem);
+export default connect(mapStateToProps, { likePost, unlikePost, deletePost })(PostItem);

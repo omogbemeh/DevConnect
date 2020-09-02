@@ -4,19 +4,16 @@ import { makePosts } from '../../actions/post'
 import { connect } from 'react-redux';
 
 const PostComponent = ({ makePosts }) => {
-    const [formData, setFormData] = useState({
-        text: ''
-    })
-
-    const { text } = formData;
+    const [text, setText] = useState('')
 
     const onChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
+        setText(e.target.name = e.target.value )
     }
 
     const onSubmit = (e) => {
-        e.preventDefault()
-        makePosts(formData);
+        e.preventDefault();
+        makePosts({ text });
+        setText('');
     }
 
     return (

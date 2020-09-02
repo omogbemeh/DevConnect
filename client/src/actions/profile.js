@@ -1,4 +1,4 @@
-import { GET_PROFILE, GET_PROFILES, PROFILE_ERROR, CLEAR_PROFILE, GET_REPOS } from './constants';
+import { GET_PROFILE, GET_PROFILES, PROFILE_ERROR, CLEAR_PROFILE, GET_REPOS, DELETE_ACCOUNT,  } from './constants';
 import axios from 'axios';
 import { setAlert } from './alert';
 
@@ -60,7 +60,7 @@ export const getProfileById = userId => async dispatch => {
 }
 
 //Get Github repo for a user
-export const getGithubRepo = username => async dispatch => {
+export const getGithubRepos = username => async dispatch => {
     try {
         const res = await axios.get(`/api/profile/github/${username}`)
         dispatch({
@@ -68,10 +68,6 @@ export const getGithubRepo = username => async dispatch => {
             dispatch: res.data
         })
     } catch (err) {
-        const errors = err.response.data.errors
-        if (errors) {
-            errors.map(error => dispatch(setAlert(error.msg, 'danger')))
-        }
         dispatch({
             type: PROFILE_ERROR
         })
@@ -96,11 +92,6 @@ export const createProfile = (formData, history, edit = false) => async dispatch
         if (!edit) {history.push('/dashboard')};
 
     } catch(err) {
-        const errors = err.response.data.errors
-        if (errors) {
-            errors.map(error => dispatch(setAlert(error.msg, 'danger')))
-        } 
-        
         dispatch({
             type: PROFILE_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status}
@@ -209,4 +200,22 @@ export const deleteEducation = id => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status}
         })
     }
+}
+
+export const deleteAccount = () => async dispatch => {
+    if (window.confirm('Are youb Sure ? This can NOT be undone.')) {
+        try {
+            const res = await axios.delete('/api/profile')
+            dispatch({type: CLEAR_PROFILE})
+            dispatch({type: DELETE_ACCOUNT})
+
+        } catch (err) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: { msg: err.response.statusText, status: err.response.status}
+            })
+        }
+    }
+    
+    
 }
